@@ -1,0 +1,14 @@
+---
+- name: Kontroll, kas kõik masinad on püsti ja mis on nende OS versioon
+  hosts: Linux
+  gather_facts: yes
+
+  tasks:
+    - name: Kontroll, kas masin on üleval
+      ping:
+
+
+    - name: Masina OS versioon
+      debug:
+        msg: "Masina {{ inventory_hostname }} OS on {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}"
+...

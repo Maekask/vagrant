@@ -1,3 +1,40 @@
+---
+- name: Kontrollige, kas vajalik tarkvara on paigaldatud
+  hosts: all
+  become: yes
+  tasks:
+    - name: Kontrolli, kas snmpd on paigaldatud
+      ansible.builtin.package:
+        name: net-snmp
+        state: present
+      tags:
+        - snmpd
+
+    - name: Kontrolli, kas tmux on paigaldatud
+      ansible.builtin.package:
+        name: tmux
+        state: present
+      tags:
+        - tmux
+
+    - name: Kontrolli, kas mc on paigaldatud
+      ansible.builtin.package:
+        name: mc
+        state: present
+      tags:
+        - mc
+
+    - name: Kontrolli, kas wget on paigaldatud
+      ansible.builtin.package:
+        name: wget
+        state: present
+      tags:
+        - wget
+
+    - name: Kontrolli, kas tree on paigaldatud
+      ansible.builtin.package:
+        name: tree
+        state: present
       tags:
         - tree
 
@@ -11,7 +48,7 @@
     - name: Kontrolli, kas Ansible on paigaldatud (ainult mart-ansible)
       ansible.builtin.package:
         name: ansible
-        state: present
+            state: present
       when: inventory_hostname == "mart-ansible"
       tags:
         - ansible

@@ -1,29 +1,49 @@
----
-- name: Kontrollige, kas vajalik tarkvara on paigaldatud
-  hosts: all
-  become: yes
-  tasks:
-    - name: Kontrolli, kas snmpd on paigaldatud
+      tags:
+        - tree
+
+    - name: Kontrolli, kas git on paigaldatud
       ansible.builtin.package:
-        name: "{{ 'net-snmp' if ansible_facts['distribution'] == 'openSUSE' else 'snmpd' }}"
+        name: git
         state: present
       tags:
-        - snmpd
+        - git
 
-    - name: Kontrolli, kas tmux on paigaldatud
+    - name: Kontrolli, kas Ansible on paigaldatud (ainult mart-ansible)
       ansible.builtin.package:
-        name: tmux
+        name: ansible
         state: present
+      when: inventory_hostname == "mart-ansible"
       tags:
-        - tmux
+        - ansible
 
-    - name: Kontrolli, kas mc on paigaldatud
+    - name: Kontrolli, kas sshpass on paigaldatud (ainult mart-ansible)
       ansible.builtin.package:
-        name: mc
+        name: sshpass
         state: present
+      when: inventory_hostname == "mart-ansible"
       tags:
-        - mc
+        - sshpass
 
-    - name: Kontrolli, kas wget on paigaldatud
+    - name: Kontrolli, kas yamllint on paigaldatud (ainult mart-ansible)
       ansible.builtin.package:
-        name: wget
+        name: yamllint
+        state: present
+      when: inventory_hostname == "mart-ansible"
+      tags:
+        - yamllint
+
+    - name: Kontrolli, kas ansible-lint on paigaldatud (ainult mart-ansible)
+      ansible.builtin.package:
+        name: ansible-lint
+        state: present
+      when: inventory_hostname == "mart-ansible"
+      tags:
+        - ansible-lint
+
+    - name: Kontrolli, kas Docker on paigaldatud (ainult mart-dockerhost)
+      ansible.builtin.package:
+        name: docker-ce
+        state: present
+      when: inventory_hostname == "mart-dockerhost"
+      tags:
+        - docker
